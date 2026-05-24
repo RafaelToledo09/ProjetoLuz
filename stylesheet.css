@@ -1,0 +1,137 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Questrial", sans-serif;
+}
+@font-face {
+    font-family: 'The Seasons';
+    src: url('fonts/theseasons.ttf'); 
+}
+header {
+    background-color: transparent;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 100;
+    backdrop-filter: blur(8px); 
+    display: flex;
+    justify-content: space-between;
+
+}
+.header-logo img {
+    max-width: 130px;
+}
+.navbar-menu ul {
+    list-style: none;
+    display: flex;
+    gap: 30px;   
+}
+.navbar-menu li {
+    padding: 10px;
+    text-align: center;        
+}
+.navbar-menu a {
+    color: black;
+    text-decoration: none;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 600;
+}
+
+h2 {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: x-large;
+}
+section {
+    padding: 50px 0;
+}
+.container {
+    width: 90%;
+    margin: 20px auto;
+
+}
+.row .col .card {
+    border: 3px solid #ccc;
+    text-align: center;
+    margin: 5px;
+    min-height: 160px;
+    padding: 50px 20px;
+    border-radius: 4px;
+}
+.row .col .card i {
+    font-size: 3em;
+    margin: 20px;
+    
+}
+.row .col img {
+    width: 100%;
+}
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 50px;
+}
+.col {
+    flex: 1;
+    min-width: 250px;
+    
+}
+.card p {
+    font-weight: bolder;
+}
+.sobre {
+    background-color: #f1f1f1;
+}
+@media (min-width: 480px) {
+    .header {
+        .navbar-hide {
+            display: none;
+        }
+        .navbar-menu {
+            display: block;
+            float: right;
+            width: 50%;
+            text-align: right;
+            ul {
+                margin-top: 10px;
+                li {
+                    display: inline;
+                    background: transparent;
+                    a:hover {
+                        color: red;
+                    }
+                }
+            }
+        }
+    }
+    .container {
+        width: 1200px;
+        margin: auto;
+    }
+    .banner {
+        padding: 300px 0;
+    }
+    .row {
+        display: flex;
+        align-items: center;
+        .col {
+            flex: 1;
+            padding: 10px;
+            
+        }
+    }
+    
+}
+.footer {
+    background-color: #2d2573;
+    color: white;
+    text-align: center;
+    padding: 100px;
+    font-size:large;
+    min-height: 100px;
+    width: 10% none;
+    
+
+}
