@@ -1,5 +1,7 @@
 <?php include 'header.php'; ?>
-        <div id="meuCarrosselDeArtes" class="carousel slide" data-bs-ride="carousel">
+
+    
+    <div id="meuCarrosselDeArtes" class="carousel slide" data-bs-ride="carousel">
   
   <div class="carousel-indicators">
     <button type="button" data-bs-target="#meuCarrosselDeArtes" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Arte 1"></button>
@@ -48,8 +50,9 @@
   </button>
 <!-- Carrosel vai até aqui -->
 </div>
+        <main>
 </div>
-    <main>
+    
         <section class="cursos">
             <div class="conteiner">
                 <h2>Luz Arte e Cultura</h2>
@@ -96,5 +99,5 @@
         </section>
     </main>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-</body>
+
 <?php include 'footer.php'; ?>

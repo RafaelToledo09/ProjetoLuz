@@ -23,6 +23,13 @@ header {
 .header-logo img {
     max-width: 130px;
 }
+.espaco-cabecalho {
+    padding-top: 88px;
+
+}
+.espaco-cabecalho img {
+    width: 100%;
+}
 .navbar-menu ul {
     list-style: none;
     display: flex;
@@ -38,9 +45,11 @@ header {
     font-family: Arial, Helvetica, sans-serif;
     font-weight: 600;
 }
-
+h1 {
+    font-size: 150px;
+}
 h2 {
-    font-family: Arial, Helvetica, sans-serif;
+   
     font-size: x-large;
 }
 section {
@@ -81,6 +90,7 @@ section {
 .card p {
     font-weight: bolder;
 }
+
 .sobre {
     background-color: #f1f1f1;
 }
@@ -128,10 +138,10 @@ section {
     background-color: #2d2573;
     color: white;
     text-align: center;
-    padding: 100px;
+    padding: 5px;
     font-size:large;
-    min-height: 100px;
-    width: 10% none;
+    min-height: 50px;
+    width: 100% none;
     
 
 }
