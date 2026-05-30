@@ -27,8 +27,11 @@ header {
     padding-top: 88px;
 
 }
-.espaco-cabecalho img {
+.espaco-cabecalho img { 
     width: 100%;
+}
+.titulo-autoral img {
+    max-width: 790px;
 }
 .navbar-menu ul {
     list-style: none;
@@ -142,6 +145,9 @@ section {
     font-size:large;
     min-height: 50px;
     width: 100% none;
+}
+.footer img {
+    max-width: 100px;
 }
 p {
     font-size: 23px;

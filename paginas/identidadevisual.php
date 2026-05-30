@@ -6,6 +6,8 @@
 
             <img src="/ProjetoLuz/imgs/tituloidentidade.png" data-aos="fade-right" data-aos-duration="2000">
 
+            
+
             <h2>
                 Direção e produção de arte para o desenvolvimento estético de marcas e produtos, definindo o
 posicionamento visual e a identidade que os diferencia. 
@@ -16,21 +18,23 @@ posicionamento visual e a identidade que os diferencia.
         </div>
 
         <div class="sbloco">
-            <p>Mais do que um logotipo, a identidade visual constrói reconhecimento, diferenciação e presença estética. É a
-transformação de uma ideia em linguagem visual — onde conceito se torna produto, produto se torna experiência e a
-estética se torna identidade.</p>
-            <img src="/ProjetoLuz/imgs/banneridentidade3.png" alt="Banner3" data-aos="fade-right" data-aos-duration="1700">
+
+            <h2>A Sofisticação do Simples</h2>
+
+            <p>Em um mercado saturado, uma camiseta lisa pode ser vista apenas como uma commodity. Nosso objetivo com esta identidade visual foi elevar essa percepção.</p>
+            <img src="/ProjetoLuz/imgsport/20.png" alt="Banner3" data-aos="fade-right" data-aos-duration="1700">
+            
+            <img src="/ProjetoLuz/imgsport/21.png" alt="Banner3" data-aos="fade-left" data-aos-duration="1900">
+            
+            <img src="/ProjetoLuz/imgsport/22.png" alt="Banner3" data-aos="fade-right" data-aos-duration="1700">
+            
+            <img src="/ProjetoLuz/imgsport/23.png" alt="Banner3" data-aos="fade-left" data-aos-duration="1900">
+
+            <img src="/ProjetoLuz/imgsport/24.png" alt="Banner4" data-aos="fade-right" data-aos-duration="1700">
         
-        
-        
-        </div
+        </div>
 
-
-
-
-
-
-    </main>
+</main>
 
 
 

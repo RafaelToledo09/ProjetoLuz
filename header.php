@@ -25,10 +25,10 @@
                     <a href="/ProjetoLuz/index.php" title="Inicio">Home</a>
                 </li>
                 <li>
-                    <a href="paginas/identidadevisual.php" title="Identidade Visual">Identidade Visual</a>
+                    <a href="/ProjetoLuz/paginas/identidadevisual.php" title="Identidade Visual">Identidade Visual</a>
                 </li>
                 <li>
-                    <a href="paginas/equipe.html" title="Nossa Equipe">Nossa Equipe</a>
+                    <a href="/ProjetoLuz/paginas/arteautoral.php" title="Arte Autoral">Arte Autoral</a>
                 </li>
                 <li>
                     <a href="paginas/contato.html" title="Entre em Contato">Entre em Contato</a>

@@ -14,27 +14,27 @@
   <div class="carousel-inner">
     
     <div class="carousel-item active">
-      <img src="https://placehold.co/1200x500/111111/ffffff?text=Arte+01" class="d-block w-100" alt="Primeira obra do artista">
+      <img src="/ProjetoLuz/imgscarrosel/1.jpg" class="d-block w-100" alt="Primeira obra do artista">
     </div>
     
     <div class="carousel-item">
-      <img src="https://placehold.co/1200x500/222222/ffffff?text=Arte+02" class="d-block w-100" alt="Segunda obra do artista">
+      <img src="/ProjetoLuz/imgscarrosel/2.jpg" class="d-block w-100" alt="Segunda obra do artista">
     </div>
     
     <div class="carousel-item">
-      <img src="https://placehold.co/1200x500/333333/ffffff?text=Arte+03" class="d-block w-100" alt="Terceira obra do artista">
+      <img src="/ProjetoLuz/imgscarrosel/3.jpg" class="d-block w-100" alt="Terceira obra do artista">
     </div>
 
     <div class="carousel-item">
-      <img src="https://placehold.co/1200x500/444444/ffffff?text=Arte+04" class="d-block w-100" alt="Quarta obra do artista">
+      <img src="/ProjetoLuz/imgscarrosel/4.jpg" class="d-block w-100" alt="Quarta obra do artista">
     </div>
 
     <div class="carousel-item">
-      <img src="https://placehold.co/1200x500/555555/ffffff?text=Arte+05" class="d-block w-100" alt="Quinta obra do artista">
+      <img src="/ProjetoLuz/imgscarrosel/5.jpg" class="d-block w-100" alt="Quinta obra do artista">
     </div>
 
     <div class="carousel-item">
-      <img src="https://placehold.co/1200x500/666666/ffffff?text=Arte+06" class="d-block w-100" alt="Sexta obra do artista">
+      <img src="/ProjetoLuz/imgscarrosel/6t.jpeg" class="d-block w-100" alt="Sexta obra do artista">
     </div>
 
   </div>
@@ -91,8 +91,7 @@
                         <img src="imgs/sobrenos.png" alt="Sobre a Luz">
                     </div>
                     <div class="col">
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium consequatur voluptas rem delectus ullam veritatis deserunt quasi, adipisci quisquam ex repudiandae vitae quia officia id eligendi! Voluptas sapiente quos temporibus.</p>
-                        <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sapiente fugit aspernatur alias asperiores saepe illum eveniet natus minima. Natus nobis distinctio voluptas illo eaque maiores repellat ratione perspiciatis similique. Numquam?</p>
+                        <p>Leonardo Faian (LUZ) é artista visual e designer com trajetória consolidada em muralismo, arte urbana e intervenções em contextos públicos e privados. Sua produção é uma síntese contemporânea que conecta referências clássicas, estética urbana e identidade territorial. Tendo a luz como fundamento conceitual e elemento central de sua linguagem, Faian desenvolve obras que transitam entre a pintura, o design e a experimentação visual, explorando a dualidade como motor de construção da realidade. Através do projeto LUZ, atua na criação e difusão de arte contemporânea, transformando ambientes e aproximando a experiência artística da vivência cotidiana da população.</p>
                     </div>
                 </div>
             </div>
