@@ -51,7 +51,7 @@
 <!-- Carrosel vai até aqui -->
 </div>
 
-<!-- Sobre Nós -->
+
 
         <main>
         </section>
@@ -74,15 +74,15 @@
 
   
   <?php 
-// 1. CONEXÃO COM O BANCO E TEMPLATE (Web Moderna)
+
 include 'conexao.php';
 include 'header.php'; 
 
-// Puxar dados do banco
+
 $stmt = $pdo->query("SELECT * FROM Produtos");
 $dadosDoBanco = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-// REQUISITO: ARMAZENAMENTO ESTRUTURADO COM ARRAYS
+
 $listaProdutos = [];
 foreach ($dadosDoBanco as $linha) {
     $listaProdutos[] = [
@@ -94,7 +94,7 @@ foreach ($dadosDoBanco as $linha) {
     ];
 }
 
-// REQUISITO: MODULARIZAÇÃO, PARAMETROS E RETORNO
+
 function calcularDescontoPix($precoOriginal) {
     if ($precoOriginal > 130) {
         return $precoOriginal * 0.85; 
@@ -102,7 +102,7 @@ function calcularDescontoPix($precoOriginal) {
     return $precoOriginal * 0.95;
 }
 
-// REQUISITO: LÓGICA DE FILTRO
+
 $produtosExibidos = $listaProdutos;
 if (isset($_GET['filtrar_premium'])) {
     $produtosExibidos = [];
@@ -123,31 +123,35 @@ if (isset($_GET['filtrar_premium'])) {
     </div>
 
     <div class="row">
-        <?php
-        // REQUISITO: CONDICIONAIS DE VALIDAÇÃO
-        if (empty($produtosExibidos)) {
-            echo "<div class='col-12'><p class='alert alert-warning text-center'>Nenhuma arte encontrada!</p></div>";
-        } else {
-            foreach ($produtosExibidos as $prod) {
-                $precoComDesconto = calcularDescontoPix($prod['preco']);
-                ?>
-                <div class="col-md-4 mb-4">
-                    <div class="card h-100 shadow-sm">
-                        <img src="<?php echo $prod['imagem']; ?>" class="card-img-top" alt="<?php echo $prod['nome']; ?>">
-                        <div class="card-body d-flex flex-column">
-                            <h5 class="card-title"><?php echo $prod['nome']; ?></h5>
-                            <p class="card-text text-muted text-truncate"><?php echo $prod['descricao']; ?></p>
-                            <div class="mt-auto">
-                                <p class="mb-1"><strong>R$ <?php echo number_format($prod['preco'], 2, ',', '.'); ?></strong></p>
-                                <a href="produto.php?id=<?php echo $prod['id']; ?>" class="btn btn-primary w-100 mt-2">Ver Detalhes</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <?php
-            }
-        }
+       <?php
+if (empty($produtosExibidos)) {
+    echo "<div class='col-12'><p class='alert alert-warning text-center'>Nenhuma arte encontrada!</p></div>";
+} else {
+    foreach ($produtosExibidos as $prod) {
+        
+        $precoComDesconto = calcularDescontoPix($prod['preco']);
         ?>
+       <div class="col-md-4 mb-4">
+    <div class="card h-100 shadow-sm">
+        
+        <img src="imgsLoja/<?php echo $prod['imagem']; ?>" class="card-img-top" alt="<?php echo $prod['nome']; ?>">
+        
+        <div class="card-body d-flex flex-column">
+            <h5 class="card-title"><?php echo $prod['nome']; ?></h5>
+            <p class="card-text text-muted text-truncate"><?php echo $prod['descricao']; ?></p>
+            <div class="mt-auto">
+                <p class="mb-1"><strong>R$ <?php echo number_format($prod['preco'], 2, ',', '.'); ?></strong></p>
+                
+                <a href="produto.php?id=<?php echo $prod['id']; ?>" class="btn btn-primary w-100 mt-2">Ver Detalhes</a>
+                
+            </div>
+        </div>
+    </div>
+</div>
+        <?php
+    }
+}
+?>
     </div>
 </div>
 

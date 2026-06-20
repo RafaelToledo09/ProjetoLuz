@@ -31,7 +31,7 @@
                     <a href="/ProjetoLuz/paginas/arteautoral.php" title="Arte Autoral">Arte Autoral</a>
                 </li>
                 <li>
-                    <a href="paginas/contato.html" title="Entre em Contato">Entre em Contato</a>
+                    <a href="paginas/login.php" title="Faça seu Login">Login</a>
                 </li>
             </ul>
         </nav>

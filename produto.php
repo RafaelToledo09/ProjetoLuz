@@ -2,7 +2,7 @@
 include 'conexao.php';
 include 'header.php';
 
-// Verificar se o ID foi passado na URL
+
 if (!isset($_GET['id']) || empty($_GET['id'])) {
     echo "<div class='container mt-5'><p class='alert alert-danger text-center'>Produto não especificado!</p></div>";
     include 'footer.php';
@@ -11,12 +11,12 @@ if (!isset($_GET['id']) || empty($_GET['id'])) {
 
 $id_produto = (int)$_GET['id'];
 
-// Buscar apenas o produto clicado no banco de dados (Segurança contra SQL Injection usando prepare)
+
 $stmt = $pdo->prepare("SELECT * FROM Produtos WHERE id_produto = :id");
 $stmt->execute(['id' => $id_produto]);
 $produto = $stmt->fetch(PDO::FETCH_ASSOC);
 
-// Validar se o produto realmente existe no banco
+
 if (!$produto) {
     echo "<div class='container mt-5'><p class='alert alert-danger text-center'>Arte não encontrada no sistema!</p></div>";
     include 'footer.php';
@@ -27,7 +27,7 @@ if (!$produto) {
 <div class="container mt-5 py-5">
     <div class="row">
         <div class="col-md-6 mb-4">
-            <img src="<?php echo $produto['imagem']; ?>" class="img-fluid rounded shadow" alt="<?php echo $produto['nome']; ?>" style="width: 100%; max-height: 500px; object-fit: cover;">
+            <img src="imgsLoja/<?php echo $produto['imagem']; ?>" alt="<?php echo $produto['nome']; ?>" class="img-fluid rounded>" style="width: 100%; max-height: 500px; object-fit: cover;">
         </div>
         
         <div class="col-md-6">
