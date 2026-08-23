@@ -62,3 +62,9 @@ INSERT INTO Cliente (id_cliente, nome, email, senha, telefone) VALUES (1, 'João
 INSERT INTO Produtos (id_produto, nome, preco, descricao, imagem) VALUES (1, 'Quadro caro', 3500.00, 'Quadro top', 'img.png');
 INSERT INTO pedido (id_pedido, id_cliente, data_pedido, status, total) VALUES (1, 1, '2026-08-20 10:00:00', 'Concluído', 0);
 INSERT INTO Itens_pedido (id_pedido, id_produto, quantidade, preco_unitario) VALUES (1, 1, 2, 3500.00);
+-- Garante que a coluna nivel existe na tabela de clientes
+ALTER TABLE Cliente ADD COLUMN IF NOT EXISTS nivel VARCHAR(20) DEFAULT 'cliente';
+
+-- Cria o usuário Admin padrão para acesso ao Dashboard
+INSERT INTO Cliente (nome, email, senha, telefone, nivel) 
+VALUES ('Administrador', 'admin@luz.com', '123', '00000000', 'admin');
