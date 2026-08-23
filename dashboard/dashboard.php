@@ -1,3 +1,13 @@
+<?php
+session_start();
+if (!isset($_SESSION['usuario_logado']) || $_SESSION['nivel'] !== 'admin') {
+    header("Location: ../login.php"); 
+    exit;
+}
+?>
+
+
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>

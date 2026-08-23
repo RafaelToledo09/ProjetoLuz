@@ -1,4 +1,15 @@
 <?php
+session_start();
+
+if (!isset($_SESSION['usuario_logado']) || $_SESSION['nivel'] !== 'admin') {
+    header("Location: ../login.php"); 
+    exit;
+}
+?>
+
+
+
+<?php
 header('Content-Type: application/json; charset=utf-8');
 
 $nome_cliente = isset($_GET['cliente']) ? $_GET['cliente'] : '';
