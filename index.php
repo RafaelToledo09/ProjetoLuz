@@ -76,7 +76,6 @@
   <?php 
 
 include 'conexao.php';
-include 'header.php'; 
 
 
 $stmt = $pdo->query("SELECT * FROM Produtos");
@@ -105,12 +104,7 @@ function calcularDescontoPix($precoOriginal) {
 
 $produtosExibidos = $listaProdutos;
 if (isset($_GET['filtrar_premium'])) {
-    $produtosExibidos = [];
-    foreach ($listaProdutos as $produto) {
-        if ($produto['preco'] > 130) {
-            $produtosExibidos[] = $produto;
-        }
-    }
+  $produtosExibidos = array_filter($listaProdutos, static fn(array $produto): bool => $produto['preco'] > 130);
 }
 ?>
 
@@ -134,11 +128,11 @@ if (empty($produtosExibidos)) {
        <div class="col-md-4 mb-4">
     <div class="card h-100 shadow-sm">
         
-        <img src="imgsLoja/<?php echo $prod['imagem']; ?>" class="card-img-top" alt="<?php echo $prod['nome']; ?>">
+        <img src="imgsLoja/<?php echo htmlspecialchars($prod['imagem'], ENT_QUOTES, 'UTF-8'); ?>" class="card-img-top" alt="<?php echo htmlspecialchars($prod['nome'], ENT_QUOTES, 'UTF-8'); ?>">
         
         <div class="card-body d-flex flex-column">
-            <h5 class="card-title"><?php echo $prod['nome']; ?></h5>
-            <p class="card-text text-muted text-truncate"><?php echo $prod['descricao']; ?></p>
+            <h5 class="card-title"><?php echo htmlspecialchars($prod['nome'], ENT_QUOTES, 'UTF-8'); ?></h5>
+            <p class="card-text text-muted text-truncate"><?php echo htmlspecialchars($prod['descricao'], ENT_QUOTES, 'UTF-8'); ?></p>
             <div class="mt-auto">
                 <p class="mb-1"><strong>R$ <?php echo number_format($prod['preco'], 2, ',', '.'); ?></strong></p>
                 

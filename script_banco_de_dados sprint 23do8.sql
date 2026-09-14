@@ -11,6 +11,7 @@ JOIN Cliente c ON p.id_cliente = c.id_cliente
 JOIN Itens_pedido ip ON p.id_pedido = ip.id_pedido
 JOIN Produtos pr ON ip.id_produto = pr.id_produto;
 
+DELIMITER //
 
 DROP PROCEDURE IF EXISTS sp_buscar_vendas_dashboard //
 
@@ -20,8 +21,12 @@ CREATE PROCEDURE sp_buscar_vendas_dashboard(
     IN p_offset INT
 )
 BEGIN
-    SELECT * 
-    FROM vw_dados_dashboard
+    WITH vendas_consolidadas AS (
+        SELECT nome_cliente, data_pedido, nome_produto, valor_total_item
+        FROM vw_dados_dashboard
+    )
+    SELECT *
+    FROM vendas_consolidadas
     WHERE p_nome_cliente = '' OR nome_cliente LIKE CONCAT('%', p_nome_cliente, '%')
     ORDER BY data_pedido DESC
     LIMIT p_limite OFFSET p_offset;
@@ -45,6 +50,8 @@ BEGIN
 END //
 
 DELIMITER ;
+
+DELIMITER //
 
 DROP FUNCTION IF EXISTS fn_calcula_total_item //
 

@@ -27,6 +27,9 @@ header {
     padding-top: 88px;
 
 }
+.container.pagina-gerenciar {
+    margin-top: 120px;
+}
 .espaco-cabecalho img { 
     width: 100%;
 }

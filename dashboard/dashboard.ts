@@ -5,52 +5,122 @@ interface Venda {
     valor_total_item: string | number; 
 }
 
-async function carregarVendas(): Promise<void> {
-    try {
-        const resposta = await fetch('api_dashboard.php');
-        
-        if (!resposta.ok) throw new Error('Falha na comunicação com a API');
+const elementoFaturamento = document.getElementById('faturamento-total');
+const elementoProdutoDestaque = document.getElementById('produto-destaque');
+const tabelaVendas = document.getElementById('tabela-vendas');
+const inputFiltro = document.getElementById('input-filtro');
+let vendasCarregadas: Venda[] = [];
 
-        const vendas: Venda[] = await resposta.json();
+function obterValor(venda: Venda): number {
+    const valor = Number(venda.valor_total_item);
+    return Number.isFinite(valor) ? valor : 0;
+}
 
-        // 1. O REDUCE
-        const faturamentoTotal = vendas.reduce((acumulador, venda) => {
-            return acumulador + Number(venda.valor_total_item);
-        }, 0);
+function formatarMoeda(valor: number): string {
+    return valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+}
 
-        const elementoFaturamento = document.getElementById('faturamento-total');
-        if (elementoFaturamento) {
-            elementoFaturamento.innerText = `R$ ${faturamentoTotal.toFixed(2).replace('.', ',')}`;
-        }
+function obterData(data: string): string {
+    const dataFormatada = new Date(data);
+    return Number.isNaN(dataFormatada.getTime())
+        ? 'Data inválida'
+        : dataFormatada.toLocaleDateString('pt-BR');
+}
 
-        const tbody = document.getElementById('tabela-vendas');
-        
-        if (tbody) {
-            if (vendas.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="4" class="text-center text-muted">Nenhum dado registrado</td></tr>';
-            } else {
-                const linhasHTML = vendas.map(venda => {
-                    const valorFormatado = `R$ ${Number(venda.valor_total_item).toFixed(2).replace('.', ',')}`;
-                    const dataFormatada = new Date(venda.data_pedido).toLocaleDateString('pt-BR');
+function mostrarMensagemTabela(mensagem: string): void {
+    if (!tabelaVendas) {
+        return;
+    }
 
-                    return `
-                        <tr>
-                            <td>${venda.nome_cliente}</td>
-                            <td>${dataFormatada}</td>
-                            <td>${venda.nome_produto}</td>
-                            <td class="fw-bold text-success">${valorFormatado}</td>
-                        </tr>
-                    `;
-                }).join(''); 
+    tabelaVendas.replaceChildren();
+    const linha = document.createElement('tr');
+    const celula = document.createElement('td');
+    celula.colSpan = 4;
+    celula.className = 'text-center text-muted';
+    celula.textContent = mensagem;
+    linha.appendChild(celula);
+    tabelaVendas.appendChild(linha);
+}
 
-                tbody.innerHTML = linhasHTML;
-            }
-        }
-        
-    
-    } catch (erro) {
-        console.error("Erro ao buscar dados:", erro);
+function renderizarVendas(vendas: Venda[]): void {
+    if (!tabelaVendas) {
+        return;
+    }
+
+    if (vendas.length === 0) {
+        mostrarMensagemTabela('Nenhum dado registrado');
+        return;
+    }
+
+    tabelaVendas.replaceChildren();
+    vendas.map((venda) => {
+        const linha = document.createElement('tr');
+        const cliente = document.createElement('td');
+        const data = document.createElement('td');
+        const produto = document.createElement('td');
+        const valor = document.createElement('td');
+
+        cliente.textContent = venda.nome_cliente;
+        data.textContent = obterData(venda.data_pedido);
+        produto.textContent = venda.nome_produto;
+        valor.textContent = formatarMoeda(obterValor(venda));
+        valor.className = 'fw-bold text-success';
+
+        linha.append(cliente, data, produto, valor);
+        tabelaVendas.appendChild(linha);
+    });
+}
+
+function atualizarIndicadores(vendas: Venda[]): void {
+    const faturamentoTotal = vendas.reduce((acumulador, venda) => acumulador + obterValor(venda), 0);
+    const frequenciaProdutos = vendas.reduce<Record<string, number>>((contagem, venda) => {
+        contagem[venda.nome_produto] = (contagem[venda.nome_produto] ?? 0) + 1;
+        return contagem;
+    }, {});
+    const produtoMaisVendido = Object.entries(frequenciaProdutos)
+        .sort(([, quantidadeA], [, quantidadeB]) => quantidadeB - quantidadeA)[0]?.[0] ?? 'Nenhum registro';
+
+    if (elementoFaturamento) {
+        elementoFaturamento.textContent = formatarMoeda(faturamentoTotal);
+    }
+    if (elementoProdutoDestaque) {
+        elementoProdutoDestaque.textContent = produtoMaisVendido;
     }
 }
 
+function filtrarVendas(): void {
+    const termo = inputFiltro instanceof HTMLInputElement ? inputFiltro.value.trim().toLowerCase() : '';
+    const vendasFiltradas = vendasCarregadas.filter((venda) => venda.nome_cliente.toLowerCase().includes(termo));
+    renderizarVendas(vendasFiltradas);
+}
+
+async function carregarVendas(): Promise<void> {
+    try {
+        const resposta = await fetch(`api_dashboard.php?_=${Date.now()}`, { cache: 'no-store' });
+        if (!resposta.ok) {
+            throw new Error('Falha na comunicação com a API');
+        }
+
+        const dados: unknown = await resposta.json();
+        if (!Array.isArray(dados)) {
+            throw new Error('A API retornou dados inválidos');
+        }
+
+        vendasCarregadas = dados as Venda[];
+        atualizarIndicadores(vendasCarregadas);
+        filtrarVendas();
+    } catch (erro) {
+        console.error('Erro ao buscar dados:', erro);
+        if (elementoFaturamento) {
+            elementoFaturamento.textContent = 'Indisponível';
+        }
+        if (elementoProdutoDestaque) {
+            elementoProdutoDestaque.textContent = 'Indisponível';
+        }
+        mostrarMensagemTabela('Não foi possível carregar as vendas.');
+    }
+}
+
+inputFiltro?.addEventListener('input', filtrarVendas);
+document.getElementById('atualizar-dashboard')?.addEventListener('click', carregarVendas);
 carregarVendas();

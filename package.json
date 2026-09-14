@@ -1,4 +1,8 @@
 {
+  "scripts": {
+    "build": "tsc",
+    "typecheck": "tsc --noEmit"
+  },
   "dependencies": {
     "typescript": "^7.0.2"
   }

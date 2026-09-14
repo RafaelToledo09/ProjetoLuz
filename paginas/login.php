@@ -7,22 +7,33 @@ require_once '../conexao.php';
 $erro = ""; 
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $email = $_POST['email'];
-    $senha = $_POST['senha'];
+    $email = trim((string)($_POST['email'] ?? ''));
+    $senha = (string)($_POST['senha'] ?? '');
 
-    $sql = "SELECT * FROM Cliente WHERE email = :email AND senha = :senha";
+    $sql = "SELECT * FROM Cliente WHERE email = :email LIMIT 1";
     $stmt = $pdo->prepare($sql);
-    
-    $stmt->bindParam(':email', $email);
-    $stmt->bindParam(':senha', $senha);
-    $stmt->execute();
+    $stmt->execute(['email' => $email]);
 
     $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
+    $senhaValida = $usuario && (
+        password_verify($senha, $usuario['senha']) ||
+        hash_equals((string)$usuario['senha'], $senha)
+    );
 
-    if ($usuario) {
+    if ($senhaValida) {
+        if (!password_get_info((string)$usuario['senha'])['algo']) {
+            $senhaHash = password_hash($senha, PASSWORD_DEFAULT);
+            $atualizarSenha = $pdo->prepare('UPDATE Cliente SET senha = :senha WHERE id_cliente = :id');
+            $atualizarSenha->execute([
+                'senha' => $senhaHash,
+                'id' => $usuario['id_cliente'],
+            ]);
+        }
+
+        session_regenerate_id(true);
         $_SESSION['usuario_logado'] = true;
-        $_SESSION['id_usuario'] = $usuario['id_cliente']; 
-        $_SESSION['nome_usuario'] = $usuario['nome']; 
+        $_SESSION['id_usuario'] = $usuario['id_cliente'];
+        $_SESSION['nome_usuario'] = $usuario['nome'];
         $_SESSION['nivel'] = $usuario['nivel'];
 
         header("Location: ../index.php");
@@ -59,8 +70,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <div class="login-container">
         <h2>Acessar Conta</h2>
         
-        <?php if ($erro != ""): ?>
-            <div class="erro-msg"><?php echo $erro; ?></div>
+        <?php if ($erro !== ""): ?>
+            <div class="erro-msg"><?php echo htmlspecialchars($erro, ENT_QUOTES, 'UTF-8'); ?></div>
         <?php endif; ?>
 
         <form method="POST">

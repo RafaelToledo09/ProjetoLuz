@@ -27,7 +27,7 @@ if (!$produto) {
 <div class="container mt-5 py-5">
     <div class="row">
         <div class="col-md-6 mb-4">
-            <img src="imgsLoja/<?php echo $produto['imagem']; ?>" alt="<?php echo $produto['nome']; ?>" class="img-fluid rounded>" style="width: 100%; max-height: 500px; object-fit: cover;">
+            <img src="imgsLoja/<?php echo htmlspecialchars($produto['imagem'], ENT_QUOTES, 'UTF-8'); ?>" alt="<?php echo htmlspecialchars($produto['nome'], ENT_QUOTES, 'UTF-8'); ?>" class="img-fluid rounded" style="width: 100%; max-height: 500px; object-fit: cover;">
         </div>
         
         <div class="col-md-6">
@@ -38,8 +38,8 @@ if (!$produto) {
                 </ol>
             </nav>
             
-            <h1 class="display-5 fw-bold mb-3"><?php echo $produto['nome']; ?></h1>
-            <p class="text-muted fs-5 mb-4"><?php echo $produto['descricao']; ?></p>
+            <h1 class="display-5 fw-bold mb-3"><?php echo htmlspecialchars($produto['nome'], ENT_QUOTES, 'UTF-8'); ?></h1>
+            <p class="text-muted fs-5 mb-4"><?php echo htmlspecialchars($produto['descricao'], ENT_QUOTES, 'UTF-8'); ?></p>
             
             <hr class="my-4">
             

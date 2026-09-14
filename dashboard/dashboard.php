@@ -1,7 +1,7 @@
 <?php
 session_start();
 if (!isset($_SESSION['usuario_logado']) || $_SESSION['nivel'] !== 'admin') {
-    header("Location: ../login.php"); 
+    header("Location: ../paginas/login.php");
     exit;
 }
 ?>
@@ -23,6 +23,10 @@ if (!isset($_SESSION['usuario_logado']) || $_SESSION['nivel'] !== 'admin') {
     <nav class="navbar navbar-dark bg-dark mb-4">
         <div class="container-fluid">
             <span class="navbar-brand mb-0 h1">Painel de Vendas</span>
+            <div class="d-flex gap-2">
+                <button class="btn btn-outline-light" id="atualizar-dashboard" type="button">Atualizar</button>
+                <a class="btn btn-outline-light" href="gerenciar.php">Gerenciar dados</a>
+            </div>
         </div>
     </nav>
 

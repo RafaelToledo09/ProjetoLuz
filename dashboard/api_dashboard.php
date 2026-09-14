@@ -1,44 +1,40 @@
 <?php
 session_start();
-
-if (!isset($_SESSION['usuario_logado']) || $_SESSION['nivel'] !== 'admin') {
-    header("Location: ../login.php"); 
-    exit;
-}
-?>
-
-
-
-<?php
 header('Content-Type: application/json; charset=utf-8');
 
-$nome_cliente = isset($_GET['cliente']) ? $_GET['cliente'] : '';
-$limite = isset($_GET['limite']) ? (int)$_GET['limite'] : 10;
-$offset = isset($_GET['offset']) ? (int)$_GET['offset'] : 0;
+if (!isset($_SESSION['usuario_logado']) || ($_SESSION['nivel'] ?? '') !== 'admin') {
+    http_response_code(401);
+    echo json_encode(['erro' => 'Acesso não autorizado.']);
+    exit;
+}
+
+require_once __DIR__ . '/../conexao.php';
+
+$nome_cliente = trim((string)($_GET['cliente'] ?? ''));
 
 try {
-    
-    $pdo = new PDO('mysql:host=localhost;dbname=loja_luz;charset=utf8', 'root', '');
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $sql = 'SELECT nome_cliente, data_pedido, nome_produto, valor_total_item
+            FROM vw_dados_dashboard
+            ORDER BY data_pedido DESC';
+    $consulta = $pdo->prepare($sql);
+    $consulta->execute();
 
-    
-    $sql = "CALL sp_buscar_vendas_dashboard(:nome, :limite, :offset)";
-    $stmt = $pdo->prepare($sql);
-    
-    $stmt->bindParam(':nome', $nome_cliente);
-    $stmt->bindParam(':limite', $limite, PDO::PARAM_INT);
-    $stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
-    
-    $stmt->execute();
-    
-    
-    $resultados = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $vendas = $consulta->fetchAll(PDO::FETCH_ASSOC);
+    $vendasFiltradas = array_filter($vendas, static function (array $venda) use ($nome_cliente): bool {
+        return $nome_cliente === '' || stripos($venda['nome_cliente'], $nome_cliente) !== false;
+    });
+    $listagemDeVendas = array_map(static function (array $venda): array {
+        return [
+            'nome_cliente' => $venda['nome_cliente'],
+            'data_pedido' => $venda['data_pedido'],
+            'nome_produto' => $venda['nome_produto'],
+            'valor_total_item' => (float)$venda['valor_total_item'],
+        ];
+    }, $vendasFiltradas);
 
-    
-    echo json_encode($resultados);
+    echo json_encode($listagemDeVendas, JSON_UNESCAPED_UNICODE);
 
 } catch (PDOException $e) {
     http_response_code(500);
-    echo json_encode(["erro" => "Falha no banco de dados: " . $e->getMessage()]);
+    echo json_encode(['erro' => 'Falha ao carregar os dados do dashboard.']);
 }
-?>
